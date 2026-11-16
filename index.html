@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>TVAD – Transparenz- und Vergabeanalyse</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d2e;--panel2:#17253a;--line:#2b3b52;--text:#edf3fa;--muted:#a9b8ca;--accent:#7dd3fc;--green:#86efac;--amber:#fcd34d;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#0b1220,#101b2c 55%,#0b1220);color:var(--text);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:28px 18px 20px;max-width:1200px;margin:auto}h1{font-size:clamp(25px,5vw,38px);line-height:1.12;margin:0 0 8px}h2{font-size:21px;margin:0 0 14px}h3{font-size:17px;margin:0 0 8px}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:11px}.sub{color:var(--muted);max-width:850px;margin:8px 0 0}.notice{margin:0 18px 18px;padding:13px 15px;border:1px solid #7c642e;background:#332a18;border-radius:12px;color:#ffedbd;max-width:1164px}
+main{max-width:1200px;margin:auto;padding:0 18px 50px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}.stat,.panel,.case{background:rgba(18,29,46,.94);border:1px solid var(--line);border-radius:15px;padding:16px}.stat strong{display:block;font-size:27px}.stat span{color:var(--muted);font-size:13px}.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 12px;margin-bottom:10px}.tab{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 14px;border-radius:999px;white-space:nowrap;font-weight:650}.tab.active{background:#16405a;border-color:#3b91b9;color:#dff6ff}.section{display:none}.section.active{display:block}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.muted{color:var(--muted)}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;font-size:11px;color:var(--muted);margin:2px}.good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.toolbar input,.toolbar select{background:#0c1625;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;min-width:180px;flex:1}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:720px;background:#101a29}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{position:sticky;top:0;background:#1a2a40;color:#d8e9f8;font-size:12px;text-transform:uppercase;letter-spacing:.04em}td{font-size:13px}tr:last-child td{border-bottom:0}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}.case{margin:12px 0}.casehead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0}.node{background:#1b2d43;border:1px solid #38516d;border-radius:10px;padding:9px 11px;font-size:13px}.arrow{color:var(--accent);font-weight:800}.small{font-size:12px;color:var(--muted)}.source-list li{margin:9px 0;overflow-wrap:anywhere}.foot{margin-top:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:14px}button{cursor:pointer}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}.stat{padding:13px}.stat strong{font-size:23px}header{padding-top:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">TVAD · Datenmonitor · Version 1.0</div>
+  <h1>Transparenz- und Vergabeanalyse Deutschland</h1>
+  <p class="sub">Ein quellengebundener Arbeitsstand zur Verknüpfung von Parteispenden, Lobbyregister-Einträgen und öffentlichen Aufträgen. Jeder Befund muss auf eine Primärquelle zurückführbar sein.</p>
+</header>
+<div class="notice"><strong>Datenstand: 16.11.2026 · Teilbestand, keine Vollerhebung.</strong><br>Die angezeigten Datensätze beruhen auf strukturierten Auszügen amtlicher Primärquellen. Es wurde in dieser Version kein vollständiger automatischer Live-Sync ausgeführt. Nicht gefundene Daten gelten als „nicht nachgewiesen“, nicht als „existiert nicht“.</div>
+<main>
+  <div class="stats">
+    <div class="stat"><strong id="countDonations">23</strong><span>erfasste Spendenmeldungen</span></div>
+    <div class="stat"><strong id="countAwards">2</strong><span>TED-Lose / Zuschlagsdatensätze</span></div>
+    <div class="stat"><strong id="countLobby">2</strong><span>Lobbyregister-Datensätze</span></div>
+    <div class="stat"><strong>3</strong><span>reale Teil-Verknüpfungen</span></div>
+  </div>
+  <nav class="tabs" aria-label="Datenbereiche">
+    <button class="tab active" data-tab="overview">Übersicht</button>
+    <button class="tab" data-tab="donations">Parteispenden</button>
+    <button class="tab" data-tab="awards">TED-Aufträge</button>
+    <button class="tab" data-tab="lobby">Lobbyregister</button>
+    <button class="tab" data-tab="links">Verknüpfungen</button>
+    <button class="tab" data-tab="sources">Primärquellen & Grenzen</button>
+  </nav>
+
+  <section class="section active" id="overview">
+    <div class="grid2">
+      <article class="panel"><h2>Was ist tatsächlich belegt?</h2>
+        <p><strong>GLS Germany:</strong> 50.000 € Spende an die CDU am 22.04.2026. Dieselbe juristische Person ist in TED 209273-2026 als Unterauftragnehmer in beiden Losen benannt. Hauptauftragnehmer ist Marketing Service Magdeburg KG.</p>
+        <p><strong>DVAG:</strong> 440.000 € in sieben erfassten Bundestags-Spendenmeldungen; zusätzlich Lobbyregister R005553.</p>
+        <p><strong>Campact e.V.:</strong> 770.000 € in drei erfassten Bundestags-Spendenmeldungen; zusätzlich Lobbyregister R000726.</p>
+      </article>
+      <article class="panel"><h2>Was ist noch nicht belegt?</h2>
+        <ul>
+          <li>Keine vollständige Kette Spende → konkrete Lobbyhandlung → Zuschlag → wirtschaftlich Berechtigter.</li>
+          <li>Für GLS ist in diesem Snapshot kein passender Lobbyregistereintrag verifiziert.</li>
+          <li>Für GLS und DVAG liegt hier kein verifizierter amtlicher UBO-Auszug vor.</li>
+          <li>Der Wert des GLS-Unterauftrags ist unbekannt.</li>
+          <li>Es gibt keinen Beleg für eine Gegenleistung oder unzulässige Einflussnahme.</li>
+        </ul>
+      </article>
+    </div>
+    <article class="panel" style="margin-top:14px"><h2>Prüflogik</h2>
+      <p>Eine Verknüpfung wird nur dann als belegt angezeigt, wenn Rechtsträger, Rolle, Datum und Primärquelle ausreichend übereinstimmen. Namensähnlichkeit allein reicht nicht. Hauptauftragnehmer und Unterauftragnehmer bleiben getrennt. Angebotswert und Rahmenhöchstwert werden nicht dem Unterauftragnehmer zugerechnet.</p>
+      <p class="small">Hinweis: Ein-Bieter-Situation, zeitliche Nähe oder Mehrparteien-Spenden sind Prüfsignale. Sie sind für sich genommen kein Rechtsverstoß und kein Korruptionsnachweis.</p>
+    </article>
+  </section>
+
+  <section class="section" id="donations">
+    <h2>Erfasste Parteispenden</h2>
+    <p class="muted">23 Meldungen im vorliegenden 2026-Teilauszug. Die Quelle ist jeweils die amtliche Bundestagsveröffentlichung; die GLS-Meldung ist zusätzlich über die Bundestagsmeldung hib 609/2026 belegt.</p>
+    <div class="toolbar"><input id="donationSearch" type="search" placeholder="Spender, Partei oder Datum suchen …"><select id="partyFilter"><option value="">Alle Parteien</option><option>CDU</option><option>SPD</option><option>FDP</option><option>Bündnis 90/Die Grünen</option><option>AfD</option></select></div>
+    <div class="tablewrap"><table><thead><tr><th>Datum</th><th>Spender</th><th>Empfänger</th><th>Betrag</th><th>Primärquelle</th></tr></thead><tbody id="donationRows"></tbody></table></div>
+    <p class="small" id="donationCount"></p>
+  </section>
+
+  <section class="section" id="awards">
+    <h2>TED-Zuschlag 209273-2026</h2>
+    <article class="panel">
+      <p><strong>Auftrag:</strong> Paketpostbeförderung für Gerichte und Justizbehörden Sachsen-Anhalt.</p>
+      <p><strong>Auftraggeber:</strong> Zentrale Beschaffungsstelle bei dem Landgericht Magdeburg. <strong>Vertragspartner / Hauptauftragnehmer:</strong> Marketing Service Magdeburg KG (DE291488362).</p>
+      <p><strong>Unterauftragnehmer:</strong> General Logistics Systems Germany GmbH &amp; Co. OHG (GLS Germany; TED-Kennung DE812802911), für Lieferungen außerhalb Sachsen-Anhalts.</p>
+      <p><a href="https://ted.europa.eu/en/notice/209273-2026/pdf" target="_blank" rel="noopener">Offizielle TED-Zuschlagsbekanntmachung öffnen ↗</a></p>
+    </article>
+    <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Los</th><th>Vertragsdatum</th><th>Angebotswert</th><th>Rahmenhöchstwert</th><th>Angebote</th><th>Unterauftrag</th></tr></thead><tbody>
+      <tr><td>LOT-0001</td><td>20.03.2026</td><td>421.704,68 €</td><td>486.357,16 €</td><td>1</td><td>GLS Germany; Wert/Anteil unbekannt</td></tr>
+      <tr><td>LOT-0002</td><td>20.03.2026</td><td>771.916,20 €</td><td>888.474,60 €</td><td>1</td><td>GLS Germany; Wert/Anteil unbekannt</td></tr>
+    </tbody></table></div>
+    <p class="small">Die beiden Angebotswerte und Rahmenhöchstwerte sind dem Hauptauftrag zugeordnet. Sie sind keine nachgewiesenen Zahlungen an GLS. Die Ein-Angebot-Situation wird dokumentiert, aber nicht als Vergabeverstoß bewertet.</p>
+  </section>
+
+  <section class="section" id="lobby">
+    <h2>Lobbyregister – verifizierte Registereinträge</h2>
+    <div class="grid2">
+      <article class="panel"><h3>Deutsche Vermögensberatung AG (DVAG)</h3><span class="pill">R005553</span><span class="pill">Letzte Änderung 05.11.2026</span>
+        <p>Interessenvertretung in eigenem Interesse. Lobbyaufwendungen 2025: 490.001–500.000 €. Personal: 1,0 FTE. Im erfassten Registerstand: 0 konkrete Regelungsvorhaben und 0 Aufträge im Auftrag Dritter.</p>
+        <p><strong>Themen:</strong> öffentliche Finanzen/Steuern, öffentliches Recht, Kranken- und Pflegeversicherung, Rente, Bank- und Finanzwesen, Versicherungswesen, Wettbewerbsrecht und Verbraucherschutz.</p>
+        <a href="https://www.lobbyregister.bundestag.de/suche/R005553/88430" target="_blank" rel="noopener">Amtlichen Registereintrag öffnen ↗</a>
+      </article>
+      <article class="panel"><h3>Campact e.V.</h3><span class="pill">R000726</span><span class="pill">Letzte Änderung 11.11.2026</span>
+        <p>Lobbyaufwendungen 2025: 6.420.001–6.430.000 €. Personal: 5,46 FTE. Im erfassten Registerstand: 12 konkrete Regelungsvorhaben und 0 Aufträge im Auftrag Dritter.</p>
+        <p><strong>Themen:</strong> u. a. erneuerbare Energien, Gesellschaftspolitik, Gesundheitsversorgung, öffentliche Finanzen, soziale Sicherung, Klimaschutz und Nachhaltigkeit.</p>
+        <a href="https://www.lobbyregister.bundestag.de/suche?filter%5Bfieldsofinterest%5D%5BFOI_SOCIAL_SECURITY%7CFOI_SS_OTHER%5D=true&filter%5Blegalform%5D%5BLF_EV%5D=true&filter%5Blegalform%5D%5BLF_NIA%5D=true&filter%5Bowncodeofconduct%5D%5Bfalse%5D=true&pageSize=10&sort=FINANCIALEXPENSES_DESC" target="_blank" rel="noopener">Amtliche Lobbyregister-Suchansicht öffnen ↗</a>
+      </article>
+    </div>
+    <p class="small">Die Registerangaben beschreiben registrierte Interessenvertretung und veröffentlichte Aufwendungen. Sie belegen nicht automatisch einzelne Gespräche, konkrete Einflussnahme oder eine Verbindung zu einer bestimmten Spende.</p>
+  </section>
+
+  <section class="section" id="links">
+    <h2>Politische und wirtschaftliche Verknüpfungen</h2>
+    <article class="case"><div class="casehead"><h3>Fall A – GLS Germany</h3><span class="pill good">Teil-Verknüpfung belegt</span></div>
+      <div class="flow"><span class="node">GLS Germany</span><span class="arrow">→</span><span class="node">50.000 € an CDU · 22.04.2026</span></div>
+      <div class="flow"><span class="node">GLS Germany</span><span class="arrow">→</span><span class="node">Unterauftragnehmer in TED Los 1 + 2</span></div>
+      <p>Der Vertrag wurde am 20.03.2026 unterzeichnet; die Spende erfolgte 33 Tage später. GLS ist nicht der Hauptauftragnehmer. Der GLS-Unterauftragswert ist nicht veröffentlicht. Kein verifizierter Lobbyregister-Match und kein amtlicher UBO-Nachweis in diesem Snapshot.</p>
+      <p><a href="https://www.bundestag.de/presse/hib/kurzmeldungen-1201030" target="_blank" rel="noopener">Bundestag: hib 609/2026 ↗</a> · <a href="https://ted.europa.eu/en/notice/209273-2026/pdf" target="_blank" rel="noopener">TED 209273-2026 ↗</a></p>
+    </article>
+    <article class="case"><div class="casehead"><h3>Fall B – DVAG</h3><span class="pill good">Spende + Lobbyregister belegt</span></div>
+      <div class="flow"><span class="node">DVAG</span><span class="arrow">→</span><span class="node">440.000 € · 7 Spendenmeldungen</span></div>
+      <div class="flow"><span class="node">DVAG</span><span class="arrow">→</span><span class="node">Lobbyregister R005553</span></div>
+      <p>Dieselbe juristische Person erscheint im Bundestags-Spendendatensatz und im Lobbyregister. Keine konkrete Spende ist einem bestimmten Lobbykontakt oder Gesetzesvorhaben zugeordnet. Im geprüften TED-Teilauszug wurde kein DVAG-Zuschlag identifiziert; das ist kein Beweis, dass es keinen gibt. UBO nicht verifiziert.</p>
+      <p><a href="https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/2026" target="_blank" rel="noopener">Bundestag: Parteispenden 2026 ↗</a> · <a href="https://www.lobbyregister.bundestag.de/suche/R005553/88430" target="_blank" rel="noopener">Lobbyregister R005553 ↗</a></p>
+    </article>
+    <article class="case"><div class="casehead"><h3>Fall C – Campact e.V.</h3><span class="pill good">Spende + Lobbyregister belegt</span></div>
+      <div class="flow"><span class="node">Campact e.V.</span><span class="arrow">→</span><span class="node">770.000 € · 3 Spendenmeldungen</span></div>
+      <div class="flow"><span class="node">Campact e.V.</span><span class="arrow">→</span><span class="node">Lobbyregister R000726</span></div>
+      <p>Dieselbe Organisation ist als Spender und Interessenvertreter dokumentiert. Campact e.V. ist nicht mit einer Aktiengesellschaft gleichzusetzen. Im geprüften TED-Teilauszug wurde kein Campact-Zuschlag belegt. Keine Gegenleistung nachgewiesen.</p>
+      <p><a href="https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/2026" target="_blank" rel="noopener">Bundestag: Parteispenden 2026 ↗</a> · <a href="https://www.lobbyregister.bundestag.de/" target="_blank" rel="noopener">Lobbyregister des Bundestages ↗</a></p>
+    </article>
+  </section>
+
+  <section class="section" id="sources">
+    <h2>Primärquellen und methodische Grenzen</h2>
+    <ul class="source-list">
+      <li><a href="https://ted.europa.eu/en/notice/209273-2026/pdf" target="_blank" rel="noopener">TED – Zuschlagsbekanntmachung 209273-2026</a> · Auftrag, Lose, Auftragnehmer, Unterauftragnehmer, Angebotswerte und Bieterzahl.</li>
+      <li><a href="https://www.bundestag.de/presse/hib/kurzmeldungen-1201030" target="_blank" rel="noopener">Deutscher Bundestag – hib 609/2026</a> · GLS-Spende über 50.000 € an die CDU am 22.04.2026.</li>
+      <li><a href="https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/2026" target="_blank" rel="noopener">Deutscher Bundestag – veröffentlichte Parteispenden 2026</a> · Spender, Empfänger, Betrag und Datum der erfassten Meldungen.</li>
+      <li><a href="https://www.lobbyregister.bundestag.de/suche/R005553/88430" target="_blank" rel="noopener">Lobbyregister – DVAG R005553</a> · Registerangaben und veröffentlichte Lobbyaufwendungen.</li>
+      <li><a href="https://www.lobbyregister.bundestag.de/" target="_blank" rel="noopener">Lobbyregister des Deutschen Bundestages</a> · Campact R000726 und weitere öffentliche Einträge.</li>
+      <li><a href="https://www.gesetze-im-internet.de/gwg_2017/__23.html" target="_blank" rel="noopener">Geldwäschegesetz § 23</a> · Rechtliche Voraussetzungen für Einsicht in das Transparenzregister.</li>
+      <li><a href="https://www.gleif.org/en/lei-data/access-and-use-lei-data" target="_blank" rel="noopener">GLEIF – LEI-Daten</a> · Offene Level-1-/Level-2-Beziehungsdaten; kein Ersatz für einen amtlichen UBO-Nachweis.</li>
+    </ul>
+    <div class="panel"><h3>Begriffe sauber trennen</h3>
+      <p><strong>Spender:</strong> Rechtsträger, der eine veröffentlichte Parteispende geleistet hat.</p>
+      <p><strong>Lobbyakteur:</strong> Organisation mit veröffentlichtem Lobbyregistereintrag.</p>
+      <p><strong>Hauptauftragnehmer:</strong> Vertragspartner der Vergabestelle.</p>
+      <p><strong>Unterauftragnehmer:</strong> führt einen Teil der Leistung für den Hauptauftragnehmer aus; sein Anteil kann unbekannt sein.</p>
+      <p><strong>Wirtschaftlich Berechtigter (UBO):</strong> natürliche Person, die letztlich Eigentum oder Kontrolle ausübt. Ein Konzern- oder Mutterunternehmen ist nicht automatisch der UBO.</p>
+    </div>
+    <p class="foot">TVAD ist ein Recherche- und Prüfwerkzeug, keine amtliche Feststellung. Datensätze sind Teilbestände und können sich ändern. Vor Veröffentlichung oder rechtlicher Bewertung sind die Originaldokumente erneut zu prüfen und zu archivieren. Keine Aussage über Schuld, Korruption oder Gegenleistung ohne eigenständige Belege.</p>
+  </section>
+</main>
+<script>
+const donations = [
+{date:'2026-09-23',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'CDU',amount:50000},
+{date:'2026-02-02',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'CDU',amount:40000},
+{date:'2026-01-27',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'CDU',amount:50000},
+{date:'2026-01-27',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'Bündnis 90/Die Grünen',amount:50000},
+{date:'2026-01-27',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'FDP',amount:50000},
+{date:'2026-01-27',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'SPD',amount:100000},
+{date:'2026-01-27',donor:'Deutsche Vermögensberatung Aktiengesellschaft DVAG',party:'CDU',amount:100000},
+{date:'2026-09-14',donor:'Campact e.V.',party:'Bündnis 90/Die Grünen',amount:150000},
+{date:'2026-08-13',donor:'Campact e.V.',party:'Bündnis 90/Die Grünen',amount:310000},
+{date:'2026-08-12',donor:'Campact e.V.',party:'SPD',amount:310000},
+{date:'2026-07-27',donor:'The Goodforces GmbH',party:'Bündnis 90/Die Grünen',amount:38150},
+{date:'2026-07-27',donor:'The Goodforces GmbH',party:'SPD',amount:38150},
+{date:'2026-04-02',donor:'PRIMUS HoldCo GmbH',party:'CDU',amount:37500},
+{date:'2026-07-03',donor:'PRIMUS HoldCo GmbH',party:'CDU',amount:37500},
+{date:'2026-06-08',donor:'MMI Leisure & Capital Management GmbH',party:'FDP',amount:40000},
+{date:'2026-07-13',donor:'MMI Leisure & Capital Management GmbH',party:'FDP',amount:40000},
+{date:'2026-02-24',donor:'heristo Aktiengesellschaft',party:'CDU',amount:60000},
+{date:'2025-12-02',donor:'Vakuum-Härtetechnik Schwer GmbH & Co. KG',party:'AfD',amount:50000},
+{date:'2026-04-22',donor:'General Logistics Systems Germany GmbH & Co. OHG',party:'CDU',amount:50000,gls:true},
+{date:'2026-06-19',donor:'Bauwert AG',party:'CDU',amount:50000},
+{date:'2026-05-28',donor:'Amand Beteiligungs GmbH & Co.KG',party:'CDU',amount:50000},
+{date:'2026-08-24',donor:'Bugovics Industries GmbH',party:'CDU',amount:50000},
+{date:'2026-03-04',donor:'Kajo Neukirchen GmbH',party:'Bündnis 90/Die Grünen',amount:155000}
+];
+const donationSource='https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/2026';
+const fmt=n=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+function renderDonations(){
+ const q=(document.getElementById('donationSearch').value||'').toLowerCase();
+ const p=document.getElementById('partyFilter').value;
+ const rows=donations.filter(d=>(!p||d.party===p)&&(`${d.date} ${d.donor} ${d.party}`.toLowerCase().includes(q))).sort((a,b)=>b.date.localeCompare(a.date));
+ document.getElementById('donationRows').innerHTML=rows.map(d=>`<tr><td>${d.date}</td><td>${d.donor}</td><td>${d.party}</td><td>${fmt(d.amount)}</td><td><a href="${d.gls?'https://www.bundestag.de/presse/hib/kurzmeldungen-1201030':donationSource}" target="_blank" rel="noopener">Bundestag ↗</a></td></tr>`).join('');
+ document.getElementById('donationCount').textContent=`${rows.length} von ${donations.length} Meldungen angezeigt. Die Liste ist ein dokumentierter Teilauszug, keine vollständige Spendenhistorie.`;
+}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));
+ document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===btn.dataset.tab));
+}));
+document.getElementById('donationSearch').addEventListener('input',renderDonations);
+document.getElementById('partyFilter').addEventListener('change',renderDonations);
+renderDonations();
+</script>
+</body>
+</html>
