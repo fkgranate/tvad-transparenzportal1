@@ -1,0 +1,653 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-11-17T18:00:00+01:00",
+  "coverage": {
+    "level": "bund",
+    "country": "DE",
+    "region": null,
+    "period_start": "2025-12-02",
+    "period_end": "2026-09-23"
+  },
+  "sources": [
+    {
+      "source_id": "SRC_BUNDESTAG_SPENDEN_2026",
+      "publisher": "Deutscher Bundestag",
+      "title": "Veröffentlichte Parteispenden 2026 (>35.000 Euro)",
+      "url": "https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/2026",
+      "published_at": null,
+      "retrieved_at": null,
+      "source_type": "webpage",
+      "license_or_terms": null,
+      "notes": "Amtliche Liste. Das Datum in den Einträgen ist der Eingang der Spende oder Spendenankündigung; nicht mit dem Datum der Veröffentlichung gleichsetzen."
+    },
+    {
+      "source_id": "SRC_TED_209273_2026",
+      "publisher": "Amt für Veröffentlichungen der Europäischen Union / TED",
+      "title": "Zuschlagsbekanntmachung 209273-2026",
+      "url": "https://ted.europa.eu/en/notice/209273-2026/pdf",
+      "published_at": "2026-03-26T00:00:00Z",
+      "retrieved_at": null,
+      "source_type": "document",
+      "license_or_terms": null,
+      "notes": "Primärquelle für zwei Lose, Auftragnehmer, Unterauftragnehmer, Angebots- und Rahmenwerte."
+    },
+    {
+      "source_id": "SRC_LOBBY_DVAG_2026",
+      "publisher": "Deutscher Bundestag – Lobbyregister",
+      "title": "Registereintrag Deutsche Vermögensberatung AG, R005553",
+      "url": "https://www.lobbyregister.bundestag.de/suche/R005553",
+      "published_at": null,
+      "retrieved_at": null,
+      "source_type": "webpage",
+      "license_or_terms": null,
+      "notes": "Aktueller Suchtrefferstand: letzte Änderung 05.11.2026; Geschäftsjahr 2025."
+    },
+    {
+      "source_id": "SRC_LOBBY_CAMPACT_2026",
+      "publisher": "Deutscher Bundestag – Lobbyregister",
+      "title": "Registereintrag Campact e.V., R000726",
+      "url": "https://www.lobbyregister.bundestag.de/suche/R000726",
+      "published_at": null,
+      "retrieved_at": null,
+      "source_type": "webpage",
+      "license_or_terms": null,
+      "notes": "Aktueller Suchtrefferstand: letzte Änderung 21.08.2026; Geschäftsjahr 2025."
+    }
+  ],
+  "entities": [
+    {
+      "entity_id": "DVAG",
+      "name": "Deutsche Vermögensberatung Aktiengesellschaft DVAG",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [
+        "R005553"
+      ],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026",
+        "SRC_LOBBY_DVAG_2026"
+      ]
+    },
+    {
+      "entity_id": "CAMPACT",
+      "name": "Campact e.V.",
+      "legal_name": null,
+      "entity_type": "association",
+      "country_code": "DE",
+      "register_ids": [
+        "R000726"
+      ],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026",
+        "SRC_LOBBY_CAMPACT_2026"
+      ]
+    },
+    {
+      "entity_id": "GOODFORCES",
+      "name": "The Goodforces GmbH",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "PRIMUS",
+      "name": "PRIMUS HoldCo GmbH",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "MMI",
+      "name": "MMI Leisure & Capital Management GmbH",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "HERISTO",
+      "name": "heristo Aktiengesellschaft",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "VAKUUM_SCHWER",
+      "name": "Vakuum-Härtetechnik Schwer GmbH & Co. KG",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "GLS",
+      "name": "General Logistics Systems Germany GmbH & Co. OHG",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026",
+        "SRC_TED_209273_2026"
+      ]
+    },
+    {
+      "entity_id": "BAUWERT",
+      "name": "Bauwert AG",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "AMAND",
+      "name": "Amand Beteiligungs GmbH & Co.KG",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "BUGOVICS",
+      "name": "Bugovics Industries GmbH",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "KAJO",
+      "name": "Kajo Neukirchen GmbH",
+      "legal_name": null,
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "CDU",
+      "name": "CDU",
+      "legal_name": null,
+      "entity_type": "political_party",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "SPD",
+      "name": "SPD",
+      "legal_name": null,
+      "entity_type": "political_party",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "FDP",
+      "name": "FDP",
+      "legal_name": null,
+      "entity_type": "political_party",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "GRUENE",
+      "name": "Bündnis 90/Die Grünen",
+      "legal_name": null,
+      "entity_type": "political_party",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "AFD",
+      "name": "AfD",
+      "legal_name": null,
+      "entity_type": "political_party",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "entity_id": "ZBS_MAGDEBURG",
+      "name": "Zentrale Beschaffungsstelle bei dem Landgericht Magdeburg",
+      "legal_name": null,
+      "entity_type": "public_authority",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_TED_209273_2026"
+      ]
+    },
+    {
+      "entity_id": "MSM",
+      "name": "Marketing Service Magdeburg KG",
+      "legal_name": "Marketing Service Magdeburg KG",
+      "entity_type": "company",
+      "country_code": "DE",
+      "register_ids": [],
+      "lei": null,
+      "source_ids": [
+        "SRC_TED_209273_2026"
+      ]
+    }
+  ],
+  "donations": [
+    {
+      "record_id": "DON_001",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 50000,
+      "date": "2026-09-23",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_002",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 40000,
+      "date": "2026-02-02",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_003",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "GRUENE",
+      "amount_eur": 50000,
+      "date": "2026-01-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_004",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "FDP",
+      "amount_eur": 50000,
+      "date": "2026-01-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_005",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "SPD",
+      "amount_eur": 100000,
+      "date": "2026-01-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_006",
+      "donor_entity_id": "DVAG",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 100000,
+      "date": "2026-01-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_007",
+      "donor_entity_id": "CAMPACT",
+      "recipient_entity_id": "GRUENE",
+      "amount_eur": 150000,
+      "date": "2026-09-14",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_008",
+      "donor_entity_id": "CAMPACT",
+      "recipient_entity_id": "GRUENE",
+      "amount_eur": 310000,
+      "date": "2026-08-13",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_009",
+      "donor_entity_id": "CAMPACT",
+      "recipient_entity_id": "SPD",
+      "amount_eur": 310000,
+      "date": "2026-08-12",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_010",
+      "donor_entity_id": "GOODFORCES",
+      "recipient_entity_id": "GRUENE",
+      "amount_eur": 38150,
+      "date": "2026-07-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_011",
+      "donor_entity_id": "GOODFORCES",
+      "recipient_entity_id": "SPD",
+      "amount_eur": 38150,
+      "date": "2026-07-27",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_012",
+      "donor_entity_id": "PRIMUS",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 37500,
+      "date": "2026-04-02",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_013",
+      "donor_entity_id": "PRIMUS",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 37500,
+      "date": "2026-07-03",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_014",
+      "donor_entity_id": "MMI",
+      "recipient_entity_id": "FDP",
+      "amount_eur": 40000,
+      "date": "2026-06-08",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_015",
+      "donor_entity_id": "MMI",
+      "recipient_entity_id": "FDP",
+      "amount_eur": 40000,
+      "date": "2026-07-13",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_016",
+      "donor_entity_id": "HERISTO",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 60000,
+      "date": "2026-02-24",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_017",
+      "donor_entity_id": "VAKUUM_SCHWER",
+      "recipient_entity_id": "AFD",
+      "amount_eur": 50000,
+      "date": "2025-12-02",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_018",
+      "donor_entity_id": "GLS",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 50000,
+      "date": "2026-04-22",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_019",
+      "donor_entity_id": "BAUWERT",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 50000,
+      "date": "2026-06-19",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_020",
+      "donor_entity_id": "AMAND",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 50000,
+      "date": "2026-05-28",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_021",
+      "donor_entity_id": "BUGOVICS",
+      "recipient_entity_id": "CDU",
+      "amount_eur": 50000,
+      "date": "2026-08-24",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "record_id": "DON_022",
+      "donor_entity_id": "KAJO",
+      "recipient_entity_id": "GRUENE",
+      "amount_eur": 155000,
+      "date": "2026-03-04",
+      "date_type": "receipt_or_announcement_date",
+      "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "record_id": "AWD_001",
+      "contracting_authority_id": "ZBS_MAGDEBURG",
+      "supplier_entity_id": "MSM",
+      "notice_id": "209273-2026",
+      "lot_id": "LOT-0001",
+      "title": "Vergabe von Rahmenvereinbarungen betreffend die Erbringung von Paketpostbeförderung für die Gerichte und Justizbehörden in Sachsen-Anhalt",
+      "offer_value_eur": 421704.68,
+      "framework_max_value_eur": 486357.16,
+      "contract_value_eur": null,
+      "currency": "EUR",
+      "contract_date": "2026-03-20",
+      "supplier_role": "prime_contractor",
+      "source_ids": [
+        "SRC_TED_209273_2026"
+      ]
+    },
+    {
+      "record_id": "AWD_002",
+      "contracting_authority_id": "ZBS_MAGDEBURG",
+      "supplier_entity_id": "MSM",
+      "notice_id": "209273-2026",
+      "lot_id": "LOT-0002",
+      "title": "Vergabe von Rahmenvereinbarungen betreffend die Erbringung von Paketpostbeförderung für die Gerichte und Justizbehörden in Sachsen-Anhalt",
+      "offer_value_eur": 771916.2,
+      "framework_max_value_eur": 888474.6,
+      "contract_value_eur": null,
+      "currency": "EUR",
+      "contract_date": "2026-03-20",
+      "supplier_role": "prime_contractor",
+      "source_ids": [
+        "SRC_TED_209273_2026"
+      ]
+    }
+  ],
+  "lobbying": [
+    {
+      "record_id": "LOB_001",
+      "entity_id": "DVAG",
+      "register_id": "R005553",
+      "registration_status": "aktiv laut Register-Suchansicht",
+      "reporting_year": 2025,
+      "expenses_min_eur": 490001,
+      "expenses_max_eur": 500000,
+      "fte": 1.0,
+      "last_changed": "2026-11-05",
+      "source_ids": [
+        "SRC_LOBBY_DVAG_2026"
+      ]
+    },
+    {
+      "record_id": "LOB_002",
+      "entity_id": "CAMPACT",
+      "register_id": "R000726",
+      "registration_status": "aktiv laut Register-Suchansicht",
+      "reporting_year": 2025,
+      "expenses_min_eur": 6420001,
+      "expenses_max_eur": 6430000,
+      "fte": 5.46,
+      "last_changed": "2026-08-21",
+      "source_ids": [
+        "SRC_LOBBY_CAMPACT_2026"
+      ]
+    }
+  ],
+  "ownership": [],
+  "relationships": [
+    {
+      "relationship_id": "REL_001",
+      "from_entity_id": "GLS",
+      "to_entity_id": "CDU",
+      "relationship_type": "donation",
+      "evidence_status": "verified",
+      "matching_method": "Identische juristische Person laut Bundestagsmeldung",
+      "notes": "Die Spende ist belegt. Daraus folgt kein Nachweis einer Gegenleistung oder Einflussnahme.",
+      "source_ids": [
+        "SRC_BUNDESTAG_SPENDEN_2026"
+      ]
+    },
+    {
+      "relationship_id": "REL_002",
+      "from_entity_id": "GLS",
+      "to_entity_id": "MSM",
+      "relationship_type": "subcontractor",
+      "evidence_status": "verified",
+      "matching_method": "TED-Organisationsrolle und gleiche Registrierungsnummer DE812802911",
+      "notes": "GLS ist Unterauftragnehmer; der Wert und prozentuale Anteil des Unterauftrags sind nicht veröffentlicht.",
+      "source_ids": [
+        "SRC_TED_209273_2026"
+      ]
+    }
+  ]
+}
