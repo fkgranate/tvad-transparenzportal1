@@ -1,7 +1,440 @@
-Organisation
-Spende
-Öffentlicher Auftrag
-Lobbyeintrag
-Eigentumsbeziehung
-Dokumentationsquelle
-Ungeprüfte Verbindung
+
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fkgranate.github.io/tvad-transparenzportal1/data/schema.json",
+  "title": "TVAD – Gemeinsames Datenmodell",
+  "description": "Datenmodell für Parteispenden, öffentliche Aufträge, Lobbyregister und Unternehmensverbindungen.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "coverage",
+    "sources",
+    "entities",
+    "donations",
+    "awards",
+    "lobbying",
+    "ownership",
+    "relationships"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["level", "country"],
+      "properties": {
+        "level": {
+          "enum": ["bund", "land", "kommune"]
+        },
+        "country": {
+          "type": "string",
+          "const": "DE"
+        },
+        "region": {
+          "type": ["string", "null"]
+        },
+        "period_start": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "period_end": {
+          "type": ["string", "null"],
+          "format": "date"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "donations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/donation"
+      }
+    },
+    "awards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/award"
+      }
+    },
+    "lobbying": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lobbying"
+      }
+    },
+    "ownership": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ownership"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "publisher",
+        "title",
+        "url",
+        "retrieved_at",
+        "source_type"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "published_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "api",
+            "download",
+            "webpage",
+            "document",
+            "manual"
+          ]
+        },
+        "license_or_terms": {
+          "type": ["string", "null"]
+        },
+        "notes": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "entity_id",
+        "name",
+        "entity_type",
+        "source_ids"
+      ],
+      "properties": {
+        "entity_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "legal_name": {
+          "type": ["string", "null"]
+        },
+        "entity_type": {
+          "enum": [
+            "company",
+            "public_authority",
+            "political_party",
+            "association",
+            "natural_person",
+            "other"
+          ]
+        },
+        "country_code": {
+          "type": ["string", "null"]
+        },
+        "register_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lei": {
+          "type": ["string", "null"]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "donation": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "donor_entity_id",
+        "recipient_entity_id",
+        "amount_eur",
+        "date",
+        "source_ids"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string"
+        },
+        "donor_entity_id": {
+          "type": "string"
+        },
+        "recipient_entity_id": {
+          "type": "string"
+        },
+        "amount_eur": {
+          "type": "number",
+          "minimum": 0
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "disclosure_type": {
+          "type": ["string", "null"]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "award": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "contracting_authority_id",
+        "supplier_entity_id",
+        "notice_id",
+        "title",
+        "source_ids"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string"
+        },
+        "contracting_authority_id": {
+          "type": "string"
+        },
+        "supplier_entity_id": {
+          "type": "string"
+        },
+        "notice_id": {
+          "type": "string"
+        },
+        "lot_id": {
+          "type": ["string", "null"]
+        },
+        "title": {
+          "type": "string"
+        },
+        "contract_value_eur": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "currency": {
+          "type": ["string", "null"]
+        },
+        "contract_date": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "supplier_role": {
+          "enum": [
+            "prime_contractor",
+            "subcontractor",
+            "unknown"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "lobbying": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "entity_id",
+        "register_id",
+        "source_ids"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string"
+        },
+        "entity_id": {
+          "type": "string"
+        },
+        "register_id": {
+          "type": "string"
+        },
+        "registration_status": {
+          "type": ["string", "null"]
+        },
+        "expenses_min_eur": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "expenses_max_eur": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ownership": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "subject_entity_id",
+        "object_entity_id",
+        "relationship_type",
+        "source_ids"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string"
+        },
+        "subject_entity_id": {
+          "type": "string"
+        },
+        "object_entity_id": {
+          "type": "string"
+        },
+        "relationship_type": {
+          "enum": [
+            "parent",
+            "subsidiary",
+            "participation",
+            "beneficial_owner",
+            "control",
+            "other"
+          ]
+        },
+        "share_percent": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "valid_from": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "valid_to": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "required": [
+        "relationship_id",
+        "from_entity_id",
+        "to_entity_id",
+        "relationship_type",
+        "evidence_status",
+        "source_ids"
+      ],
+      "properties": {
+        "relationship_id": {
+          "type": "string"
+        },
+        "from_entity_id": {
+          "type": "string"
+        },
+        "to_entity_id": {
+          "type": "string"
+        },
+        "relationship_type": {
+          "enum": [
+            "donation",
+            "lobbying_registration",
+            "contract_award",
+            "subcontractor",
+            "ownership",
+            "shared_person",
+            "name_match_candidate",
+            "other"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "verified",
+            "probable",
+            "candidate",
+            "unverified",
+            "rejected"
+          ]
+        },
+        "matching_method": {
+          "type": ["string", "null"]
+        },
+        "notes": {
+          "type": ["string", "null"]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
