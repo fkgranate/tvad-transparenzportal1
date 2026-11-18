@@ -653,17 +653,34 @@
 
       ]
     },
-    {
-      "relationship_id": "REL_002",
-      "from_entity_id": "GLS",
-      "to_entity_id": "MSM",
-      "relationship_type": "subcontractor",
-      "evidence_status": "verified",
-      "matching_method": "TED-Organisationsrolle und gleiche Registrierungsnummer DE812802911",
-      "notes": "GLS ist Unterauftragnehmer; der Wert und prozentuale Anteil des Unterauftrags sind nicht veröffentlicht.",
-      "source_ids": [
-        "SRC_TED_209273_2026"
-      ]
-    }
+
+{
+  "relationship_id": "REL_002",
+  "from_entity_id": "GLS",
+  "to_entity_id": "MSM",
+  "relationship_type": "subcontractor",
+  "evidence_status": "verified",
+  "matching_method": "TED-Zuschlagsbekanntmachung 209273-2026, Unterauftragnehmerangabe für LOT-0001",
+  "notes": "GLS Germany ist für LOT-0001 als Unterauftragnehmer dokumentiert. Der Unterauftragswert und der prozentuale Anteil sind nicht veröffentlicht.",
+  "lot_id": "LOT-0001",
+  "source_ids": [
+    "SRC_TED_209273_2026"
+  ]
+},
+{
+  "relationship_id": "REL_003",
+  "from_entity_id": "GLS",
+  "to_entity_id": "MSM",
+  "relationship_type": "subcontractor",
+  "evidence_status": "verified",
+  "matching_method": "TED-Zuschlagsbekanntmachung 209273-2026, Unterauftragnehmerangabe für LOT-0002",
+  "notes": "GLS Germany ist für LOT-0002 als Unterauftragnehmer dokumentiert. Der Unterauftragswert und der prozentuale Anteil sind nicht veröffentlicht.",
+  "lot_id": "LOT-0002",
+  "source_ids": [
+    "SRC_TED_209273_2026"
+  ]
+}
+
+    
   ]
 }
