@@ -21,7 +21,7 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "generated_at": {
       "type": "string",
@@ -125,7 +125,7 @@
           "format": "date-time"
         },
         "retrieved_at": {
-          "type": "string",
+          "type": ["string", "null"],
           "format": "date-time"
         },
         "source_type": {
@@ -226,6 +226,10 @@
         "disclosure_type": {
           "type": ["string", "null"]
         },
+        "date_type": {
+          "type": ["string", "null"],
+          "description": "Art des Datums, z. B. Eingang der Spende oder Spendenankündigung; nicht automatisch das Veröffentlichungsdatum."
+        },
         "source_ids": {
           "type": "array",
           "items": {
@@ -267,6 +271,16 @@
         "contract_value_eur": {
           "type": ["number", "null"],
           "minimum": 0
+        },
+        "offer_value_eur": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Wert des Angebots laut Vergabebekanntmachung; nicht automatisch der tatsächlich abgerufene Auftragswert."
+        },
+        "framework_max_value_eur": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Maximalwert der Rahmenvereinbarung; nicht mit dem tatsächlichen Auftragswert gleichzusetzen."
         },
         "currency": {
           "type": ["string", "null"]
@@ -319,6 +333,20 @@
         "expenses_max_eur": {
           "type": ["number", "null"],
           "minimum": 0
+        },
+        "reporting_year": {
+          "type": ["integer", "null"],
+          "minimum": 1900,
+          "maximum": 2100
+        },
+        "fte": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Gemeldete Vollzeitäquivalente."
+        },
+        "last_changed": {
+          "type": ["string", "null"],
+          "format": "date"
         },
         "source_ids": {
           "type": "array",
