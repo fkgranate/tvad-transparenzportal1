@@ -78,11 +78,6 @@ try {
   r.lot_id === x.lot_id
 );
 
- const subcontractors = d.relationships.filter(r =>
-  r.relationship_type === "subcontractor" &&
-  r.to_entity_id === x.supplier_entity_id &&
-  r.lot_id === x.lot_id
-);
 
 const subcontractorText = subcontractors.length
   ? subcontractors.map(r =>
