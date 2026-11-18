@@ -72,10 +72,17 @@ try {
     `).join("");
 
   $("awardRows").innerHTML = d.awards.map(x => {
-    const subcontractors = d.relationships.filter(r =>
-      r.relationship_type === "subcontractor" &&
-      r.to_entity_id === x.supplier_entity_id
-    );
+  const subcontractors = d.relationships.filter(r =>
+  r.relationship_type === "subcontractor" &&
+  r.to_entity_id === x.supplier_entity_id &&
+  r.lot_id === x.lot_id
+);
+
+const subcontractorText = subcontractors.length
+  ? subcontractors.map(r =>
+      `${esc(name(r.from_entity_id))}: als Unterauftragnehmer für ${esc(r.lot_id)} dokumentiert. Unterauftragswert nicht veröffentlicht.`
+    ).join("<br>")
+  : "Kein Unterauftragnehmer für dieses Los dokumentiert.";
 
     const subcontractorText = subcontractors.length
       ? subcontractors.map(r =>
