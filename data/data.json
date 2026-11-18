@@ -505,10 +505,10 @@
       "date_type": "receipt_or_announcement_date",
       "disclosure_type": "Bundestag-Veröffentlichung nach § 25 Abs. 3 Parteiengesetz",
       "source_ids": [
-        "source_ids": [
+        
   "SRC_BUNDESTAG_SPENDEN_2026",
   "SRC_BUNDESTAG_HIB_609_2026"
-]
+      
       ]
     },
     {
@@ -637,10 +637,10 @@
       "matching_method": "Identische juristische Person laut Bundestagsmeldung",
       "notes": "Die Spende ist belegt. Daraus folgt kein Nachweis einer Gegenleistung oder Einflussnahme.",
       "source_ids": [
-        "source_ids": [
+        
   "SRC_BUNDESTAG_SPENDEN_2026",
   "SRC_BUNDESTAG_HIB_609_2026"
-]
+
       ]
     },
     {
