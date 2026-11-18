@@ -8,20 +8,13 @@ const errors = [];
 const warnings = [];
 const checks = [];
 
-function error(message) {
-  errors.push(message);
+function check(condition, message) {
+  if (condition) checks.push(message);
+  else errors.push(message);
 }
 
 function warn(message) {
   warnings.push(message);
-}
-
-function check(condition, message) {
-  if (condition) {
-    checks.push(message);
-  } else {
-    error(message);
-  }
 }
 
 function isObject(value) {
@@ -35,12 +28,24 @@ function isNonEmptyString(value) {
     value.trim().length > 0;
 }
 
+const idFields = {
+  sources: "source_id",
+  entities: "entity_id",
+  donations: "record_id",
+  awards: "record_id",
+  lobbying: "record_id",
+  ownership: "record_id",
+  relationships: "relationship_id"
+};
+
+const collections = Object.keys(idFields);
+
 function main() {
   console.log("\nTVAD – Datenqualitätsprüfung");
-  console.log("============================\n");
+  console.log("============================");
 
   if (!fs.existsSync(DATA_PATH)) {
-    error("data/data.json wurde nicht gefunden.");
+    errors.push("data/data.json wurde nicht gefunden.");
     return report();
   }
 
@@ -48,21 +53,11 @@ function main() {
 
   try {
     data = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
-    check(true, "JSON-Datei ist syntaktisch gültig.");
+    checks.push("JSON-Datei ist syntaktisch gültig.");
   } catch (e) {
-    error("JSON-Datei ist fehlerhaft: " + e.message);
+    errors.push("JSON-Fehler: " + e.message);
     return report();
   }
-
-  const collections = [
-    "sources",
-    "entities",
-    "donations",
-    "awards",
-    "lobbying",
-    "ownership",
-    "relationships"
-  ];
 
   for (const name of collections) {
     check(
@@ -71,65 +66,69 @@ function main() {
     );
   }
 
-  if (errors.length > 0) {
-    return report();
-  }
+  if (errors.length) return report();
 
   const ids = {};
 
   for (const name of collections) {
     ids[name] = new Set();
+    const idField = idFields[name];
 
     for (const record of data[name]) {
       if (!isObject(record)) {
-        error(name + ": Ein Datensatz ist kein Objekt.");
+        errors.push(name + ": Datensatz ist kein Objekt.");
         continue;
       }
 
-      if (!isNonEmptyString(record.id)) {
-        error(name + ": Ein Datensatz hat keine gültige ID.");
+      const id = record[idField];
+
+      if (!isNonEmptyString(id)) {
+        errors.push(
+          name + ": ID-Feld " + idField + " fehlt oder ist ungültig."
+        );
         continue;
       }
 
-      if (ids[name].has(record.id)) {
-        error(name + ": Doppelte ID " + record.id);
+      if (ids[name].has(id)) {
+        errors.push(name + ": Doppelte ID " + id);
       }
 
-      ids[name].add(record.id);
+      ids[name].add(id);
     }
   }
 
   const sourceIds = ids.sources;
   const entityIds = ids.entities;
 
-  function validateSourceReferences(record, label) {
-    let references = [];
+  function validateSources(record, label) {
+    const refs = [];
 
     if (typeof record.source_id === "string") {
-      references.push(record.source_id);
+      refs.push(record.source_id);
     }
 
     if (Array.isArray(record.source_ids)) {
-      references.push(...record.source_ids);
+      refs.push(...record.source_ids);
     }
 
-    for (const id of references) {
+    for (const id of refs) {
       if (!sourceIds.has(id)) {
-        error(label + ": Unbekannte Quellen-ID " + id);
+        errors.push(label + ": Unbekannte Quellen-ID " + id);
       }
     }
 
-    if (references.length === 0) {
+    if (!refs.length) {
       warn(label + ": Keine Quellenreferenz vorhanden.");
     }
   }
 
-  const entityReferenceFields = [
+  const entityFields = [
     "entity_id",
     "donor_entity_id",
     "recipient_entity_id",
-    "contractor_entity_id",
     "supplier_entity_id",
+    "contractor_entity_id",
+    "contracting_authority_id",
     "owner_entity_id",
     "owned_entity_id",
     "from_entity_id",
@@ -140,97 +139,69 @@ function main() {
     for (const record of data[name]) {
       if (!isObject(record)) continue;
 
-      validateSourceReferences(
-        record,
-        name + "/" + record.id
-      );
+      const id = record[idFields[name]] || "unbekannt";
+      const label = name + "/" + id;
 
-      for (const field of entityReferenceFields) {
+      validateSources(record, label);
+
+      for (const field of entityFields) {
         const value = record[field];
 
         if (
           typeof value === "string" &&
-          value.trim() !== "" &&
+          value.trim() &&
           !entityIds.has(value)
         ) {
-          error(
-            name + "/" + record.id +
-            ": Unbekannte Entity-Referenz in " + field +
-            ": " + value
+          errors.push(
+            label + ": Unbekannte Entity-ID in " +
+            field + ": " + value
           );
         }
       }
     }
   }
 
-  // Quellenqualität
   for (const source of data.sources) {
     if (!isNonEmptyString(source.url)) {
-      warn("Quelle " + source.id + ": URL fehlt.");
+      warn("Quelle " + source.source_id + ": URL fehlt.");
     }
 
-    if (
-      source.retrieved_at === null ||
-      !isNonEmptyString(source.retrieved_at)
-    ) {
+    if (!isNonEmptyString(source.retrieved_at)) {
       warn(
-        "Quelle " + source.id +
-        ": Abrufzeitpunkt retrieved_at fehlt."
+        "Quelle " + source.source_id +
+        ": Abrufdatum nicht dokumentiert."
       );
     }
   }
 
-  // Beleglage bei Beziehungen
   for (const relationship of data.relationships) {
-    if (
-      !Array.isArray(relationship.source_ids) ||
-      relationship.source_ids.length === 0
-    ) {
-      warn(
-        "Beziehung " + relationship.id +
-        ": Kein Quellenbeleg hinterlegt."
-      );
-    }
-
     if (!isNonEmptyString(relationship.notes)) {
       warn(
-        "Beziehung " + relationship.id +
+        "Beziehung " + relationship.relationship_id +
         ": Erläuterung fehlt."
       );
     }
-  }
 
-  // Vergabedaten: Angebotswert und Rahmenwert
-  // dürfen nicht mit tatsächlichen Ausgaben verwechselt werden.
-  for (const award of data.awards) {
-    const hasOfferValue =
-      typeof award.offer_value_eur === "number";
-
-    const hasFrameworkValue =
-      typeof award.framework_max_value_eur === "number";
-
-    const hasContractValue =
-      typeof award.contract_value_eur === "number";
-
-    if (hasOfferValue && hasContractValue) {
-      if (award.offer_value_eur !== award.contract_value_eur) {
-        warn(
-          "Vergabe " + award.id +
-          ": Angebotswert und Vertragswert unterscheiden sich. " +
-          "Bitte getrennt darstellen."
-        );
-      }
-    }
-
-    if (hasFrameworkValue && !hasContractValue) {
+    if (!isNonEmptyString(relationship.evidence_status)) {
       warn(
-        "Vergabe " + award.id +
-        ": Rahmenhöchstwert vorhanden, tatsächlicher Vertragswert fehlt."
+        "Beziehung " + relationship.relationship_id +
+        ": Belegstatus fehlt."
       );
     }
   }
 
-  // Plausibilitätsprüfung von Geldbeträgen
+  for (const award of data.awards) {
+    if (
+      typeof award.framework_max_value_eur === "number" &&
+      typeof award.contract_value_eur !== "number"
+    ) {
+      warn(
+        "Vergabe " + award.record_id +
+        ": Rahmenhöchstwert ist kein tatsächlicher Vertragswert."
+      );
+    }
+  }
+
   for (const name of ["donations", "awards", "lobbying"]) {
     for (const record of data[name]) {
       for (const [field, value] of Object.entries(record)) {
@@ -239,8 +210,8 @@ function main() {
           typeof value === "number" &&
           value < 0
         ) {
-          error(
-            name + "/" + record.id +
+          errors.push(
+            name + "/" + record[idFields[name]] +
             ": Negativer Geldbetrag in " + field
           );
         }
@@ -254,26 +225,18 @@ function main() {
 function report() {
   console.log("\nERGEBNIS");
   console.log("========");
-
-  console.log("\nErfolgreiche Prüfungen: " + checks.length);
+  console.log("Erfolgreiche Prüfungen: " + checks.length);
   console.log("Fehler: " + errors.length);
   console.log("Warnungen: " + warnings.length);
 
-  if (warnings.length > 0) {
+  if (warnings.length) {
     console.log("\nWARNUNGEN:");
-
-    for (const message of warnings) {
-      console.log("- " + message);
-    }
+    warnings.forEach(x => console.log("- " + x));
   }
 
-  if (errors.length > 0) {
+  if (errors.length) {
     console.log("\nFEHLER:");
-
-    for (const message of errors) {
-      console.log("- " + message);
-    }
-
+    errors.forEach(x => console.log("- " + x));
     console.log("\nPRÜFUNG NICHT BESTANDEN.");
     process.exitCode = 1;
   } else {
@@ -281,8 +244,8 @@ function report() {
   }
 
   console.log(
-    "\nHinweis: Diese Prüfung ersetzt keine " +
-    "inhaltliche Überprüfung der Originalquellen."
+    "\nHinweis: Die Prüfung ersetzt keine inhaltliche " +
+    "Überprüfung der Originalquellen."
   );
 }
 
